@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang='en'>
+    <head>
+        <title>Project 1</title>
+        <meta charset='utf-8'>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
+        <script src='script.js' defer></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+    </head>
+    <body>
+        <h1>Tic Tac Toe</h1>
+        <div id='app' v-cloak>
+            <div>
+                <input type="radio" name="players" value="1" v-model="numberOfPlayers">One Player
+                <input type="radio" name="players" value="2" v-model="numberOfPlayers">Two Players
+            </div>
+            <div>
+                <p v-if='numberOfPlayers == 1'>
+                    <label>What’s your name? <input type='text' v-model='players[0]' v-on:keyup='currentPlayer=players[0]'></label>
+                </p>
+                <p v-if='numberOfPlayers == 2'>
+                    <label>Player 1, what’s your name? <input type='text' v-model='players[0]' v-on:keyup='currentPlayer=players[0]'></label>
+                    <label>Player 2, what’s your name? <input type='text' v-model='players[1]'></label>
+                </p>
+            </div>                 
+
+            <div v-if='(numberOfPlayers==1 && players[0]) || (numberOfPlayers == 2 && players[0] && players[1])'>
+                <p>{{ currentPlayer }}'s turn</p>
+                <table>
+                    <tr v-for="(row,rowindex) in gameTable">
+                        <td v-for="(cell,cellindex) in row" 
+                            v-on:click='makeMove(row,cellindex)'>
+                            {{cell}}
+                        </td> 
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
