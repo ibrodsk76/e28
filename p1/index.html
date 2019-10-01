@@ -30,12 +30,19 @@
                 <table>
                     <tr v-for="(row,rowindex) in gameTable">
                         <td v-for="(cell,cellindex) in row" 
-                            v-on:click='makeMove(row,cellindex)'>
+                            v-on:click='makeMove(rowindex,cellindex)'>
                             {{cell}}
                         </td> 
                     </tr>
                 </table>
             </div>
+
+            <div class='results'>
+                {{GameResults}}
+            </div>
+        
+            <br/>
+            <button v-on:click="onReset">Reset</button>
         </div>
     </body>
 </html>
