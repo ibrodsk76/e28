@@ -1,8 +1,8 @@
 let app = new Vue({
     el: '#app',
     data: {
-        'numberOfPlayers': null,
-        'players': [{name:'', symbol:'X'},{name:'',symbol:'O'}],
+        'numberOfPlayers': 1,
+        'players': [{name:'', symbol:'X', rawValue: -1},{name:'',symbol:'O', rawValue: 1}],
         'currentPlayer': 0,
         'gameOver': false,
         'GameResults': null,
@@ -34,13 +34,20 @@ let app = new Vue({
                 gameOver = true;
                 return;
             }
-            
-            this.currentPlayer = (this.currentPlayer == 0) ? 1 : 0;
 
-            if (this.numberOfPlayers == 1)    
+            this.currentPlayer = (this.currentPlayer == 0) ? 1 : 0;
+            
+            if (this.numberOfPlayers == 1 && this.currentPlayer == 1)    
             {
                 // Computer makes a move
+                // make it sleep for 500 ms, looks better
+                setTimeout(this.Move, 500);
             }
+        },
+        Move: function() {
+            var bestSpot = this.minimax(this.gameTable,this.players[0]);
+            // make move          
+            this.makeMove(bestSpot.location[0],bestSpot.location[1]);
         },
         isGameOver: function(MyTable, symbol) {
             // checking rows
@@ -100,10 +107,64 @@ let app = new Vue({
             }
             return 0;
         },
+
+        minimax: function(board, player) {
+
+            var currResult = this.isGameOver(board,player.symbol);
+            if (currResult == 2) 
+                return {score:player.rawValue}; // 1 or -1
+            else if (currResult == 1)
+                return {score:0};
+
+            var moves = [];
+
+            player = this.players[(player.rawValue == -1) ? 1 : 0];
+              
+            for (var i = 0; i < 3; i++) {
+                for (var j = 0; j < 3; j++) { // For all moves
+                    if (board[i][j] == '') { // Only possible moves
+                        var move = {};
+                        move.location = [i,j];
+                        var boardWithNewMove = JSON.parse(JSON.stringify(board)); // Copy board to make it mutable
+                        boardWithNewMove[i][j] = player.symbol; // Try the move
+                        var result = this.minimax(boardWithNewMove, player);
+                        move.score = result.score;
+                        moves.push(move);
+                    
+                    }    
+                } 
+            }         
+            //choosing best move    
+            var bestMove;
+            // if it is the computer's turn loop over the moves and choose the move with the highest score
+            if(player.rawValue == 1) {
+                var bestScore = -2;
+                for(var k = 0; k < moves.length; k++) {
+                    if(moves[k].score > bestScore) {
+                        bestScore = moves[k].score;
+                        bestMove = k;
+                    }
+                }
+            } else {              
+              // else loop over the moves and choose the move with the lowest score
+                var bestScore = 2;
+                for(var k = 0; k < moves.length; k++) {
+                    if(moves[k].score < bestScore) { 
+                        bestScore = moves[k].score;
+                        bestMove = k;
+                    }
+                }
+            }
+              
+            // return the chosen move (object) from the array to the higher depth
+            return moves[bestMove];
+                  
+        },
+
         // reseting back to beginning of the game, all cells empty
         onReset: function() {
-            this.numberOfPlayers = null;
-            this.players = [{name:'', symbol:'X'},{name:'',symbol:'O'}],
+            this.numberOfPlayers = 1;
+            this.players = [{name:'', symbol:'X', rawValue: -1},{name:'',symbol:'O', rawValue: 1}],
             this.currentPlayer = 0;
             this.gameOver = false;
             this.GameResults = null;
