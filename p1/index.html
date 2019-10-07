@@ -19,11 +19,11 @@
             </div>
             <div>
                 <p v-if='numberOfPlayers == 1'>
-                    <label>What’s your name? <input type='text' v-model.lazy='players[0].name' ></label>
+                    <label>What’s your name? <input type='text' v-model='players[0].name' ></label>
                 </p>
                 <p v-if='numberOfPlayers == 2'>
-                    <label>Player 1, what’s your name? <input type='text' v-model.lazy='players[0].name' ></label>
-                    <label>Player 2, what’s your name? <input type='text' v-model.lazy='players[1].name'></label>
+                    <label>Player 1, what’s your name? <input type='text' v-model='players[0].name' ></label>
+                    <label>Player 2, what’s your name? <input type='text' v-model='players[1].name'></label>
                 </p>
             </div>                 
 
