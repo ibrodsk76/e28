@@ -4,34 +4,35 @@ let app = new Vue({
         'numberOfPlayers': 1,
         'players': [{name:'', symbol:'X', rawValue: -1},{name:'',symbol:'O', rawValue: 1}],
         'currentPlayer': 0,
+        'startPlayer': 0,
         'gameOver': false,
         'GameResults': null,
-        'gameTable': [['','',''],
-                      ['','',''],
-                      ['','',''],
+        'gameTable': [[{value:'',win:false},{value:'',win:false},{value:'',win:false}],
+                      [{value:'',win:false},{value:'',win:false},{value:'',win:false}],
+                      [{value:'',win:false},{value:'',win:false},{value:'',win:false}],
                      ]
     },
     methods: {
         makeMove: function(rowindex,cellindex) {
             // don't do anything if a cell is already occupied or game is over
-            if (this.gameTable[rowindex][cellindex] != "" || this.gameOver)
+            if (this.gameTable[rowindex][cellindex].value != "" || this.gameOver)
                 return;
             // if first time here and one player is playing, second player's name is "Computer"
             if (this.numberOfPlayers == 1 && !this.players[1].name)
                 this.players[1].name = 'Computer';
             // insert the symbol of the current playeer
-            this.gameTable[rowindex].splice(cellindex,1,this.players[this.currentPlayer].symbol);
+            this.gameTable[rowindex].splice(cellindex,1,{value:this.players[this.currentPlayer].symbol,win:false});
             let result = this.isGameOver(this.gameTable, this.players[this.currentPlayer].symbol)
             if (result == 2)
             {
                 this.GameResults = this.players[this.currentPlayer].name + " won!";   
-                gameOver = true;
+                this.gameOver = true;
                 return;
             }
             else if (result == 1)
             {
                 this.GameResults = "It's a draw!";    
-                gameOver = true;
+                this.gameOver = true;
                 return;
             }
 
@@ -54,10 +55,13 @@ let app = new Vue({
             for (var i = 0; i < 3; i++) {
                 for (var j = 0; j < 3; j++)
                 {
-                    if (MyTable[i][j] != symbol)
+                    if (MyTable[i][j].value != symbol)
                         break;
                     if (j == 2) // if at the end of the row, then the current player won
-                    {                         
+                    {
+                        // marking the winning row red
+                        for (var k = 0; k <3; k ++)
+                            MyTable[i][k].win = true;                         
                         return 2;
                     }
                 }
@@ -66,30 +70,39 @@ let app = new Vue({
             for (var j = 0; j < 3; j++) {
                 for (var i = 0; i < 3; i++)
                 {
-                    if (MyTable[i][j] != symbol)
+                    if (MyTable[i][j].value != symbol)
                         break;
                     if (i == 2) // if at the bottom of the column, then the current player won
                     {
+                        // marking the winning column red
+                        for (var k = 0; k <3; k ++)
+                            MyTable[k][j].win = true;                                             
                         return 2;
                     }
                 }
             }
             // checking diagonal top left to bottom right
             for (var i = 0; i < 3; i++) {
-                if (MyTable[i][i] != symbol)
+                if (MyTable[i][i].value != symbol)
                     break;
                 if (i == 2)
                 {
+                    // marking the winning diagonal red
+                    for (var k = 0; k <3; k ++)
+                        MyTable[k][k].win = true;                         
                     return 2;
                 }
             }
             // checking diagonal top right to bottom left
             for (var i = 0; i < 3; i++) {
                 j = 2-i;
-                if (MyTable[i][j] != symbol)
+                if (MyTable[i][j].value != symbol)
                     break;
                 if (i == 2)
                 {
+                    // marking the winning diagonal red
+                    for (var k = 0; k <3; k ++)
+                        MyTable[k][2-k].win = true;                         
                     return 2;
                 }
             }
@@ -97,7 +110,7 @@ let app = new Vue({
             for (var i = 0; i < 3; i++) {
                 for (var j = 0; j < 3; j++)
                 {
-                    if (MyTable[i][j] == "")
+                    if (MyTable[i][j].value == "")
                         return 0;
                     if (i == 2 && j == 2)
                     {
@@ -122,11 +135,11 @@ let app = new Vue({
               
             for (var i = 0; i < 3; i++) {
                 for (var j = 0; j < 3; j++) { // For all moves
-                    if (board[i][j] == '') { // Only possible moves
+                    if (board[i][j].value == '') { // Only possible moves
                         var move = {};
                         move.location = [i,j];
                         var boardWithNewMove = JSON.parse(JSON.stringify(board)); // Copy board to make it mutable
-                        boardWithNewMove[i][j] = player.symbol; // Try the move
+                        boardWithNewMove[i][j].value = player.symbol; // Try the move
                         var result = this.minimax(boardWithNewMove, player);
                         move.score = result.score;
                         moves.push(move);
@@ -161,17 +174,32 @@ let app = new Vue({
                   
         },
 
-        // reseting back to beginning of the game, all cells empty
+        // reseting the board back to beginning of the game, keeping the players, changing the order
+        onPlayAgain: function() {
+            this.startPlayer = (this.startPlayer == 0) ? 1 : 0;
+            this.currentPlayer = this.startPlayer;
+            this.gameOver = false;
+            this.GameResults = null;
+            this.gameTable = [[{value:'',win:false},{value:'',win:false},{value:'',win:false}],
+            [{value:'',win:false},{value:'',win:false},{value:'',win:false}],
+            [{value:'',win:false},{value:'',win:false},{value:'',win:false}],
+            ]
+            if (this.players[this.currentPlayer].name == "Computer")
+                setTimeout(this.Move, 10);
+        },
+
+        // reseting everything back to beginning of the game
         onReset: function() {
             this.numberOfPlayers = 1;
             this.players = [{name:'', symbol:'X', rawValue: -1},{name:'',symbol:'O', rawValue: 1}],
             this.currentPlayer = 0;
+            this.startPlayer = 0;
             this.gameOver = false;
             this.GameResults = null;
-            this.gameTable = [['','',''],
-                         ['','',''],
-                         ['','',''],
-                        ];
+            this.gameTable = [[{value:'',win:false},{value:'',win:false},{value:'',win:false}],
+            [{value:'',win:false},{value:'',win:false},{value:'',win:false}],
+            [{value:'',win:false},{value:'',win:false},{value:'',win:false}],
+           ]
         }
     }
 });

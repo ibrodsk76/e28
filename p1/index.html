@@ -31,9 +31,9 @@
                 <p>{{ players[currentPlayer].name }}'s turn</p>
                 <table>
                     <tr v-for="(row,rowindex) in gameTable">
-                        <td v-for="(cell,cellindex) in row" 
+                        <td v-bind:class="{ results: gameTable[rowindex][cellindex].win }" v-for="(cell,cellindex) in row" 
                             v-on:click='makeMove(rowindex,cellindex)'>
-                            {{cell}}
+                            {{cell.value}}
                         </td> 
                     </tr>
                 </table>
@@ -44,6 +44,7 @@
             </div>
         
             <br/>
+            <button v-if='gameOver' v-on:click="onPlayAgain">Play Again</button>
             <button v-on:click="onReset">Reset</button>
         </div>
     </body>
