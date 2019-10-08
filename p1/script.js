@@ -1,7 +1,7 @@
 let app = new Vue({
     el: '#app',
     data: {
-        'numberOfPlayers': 1,
+        'numberOfPlayers': '',
         'players': [{name:'', symbol:'X', rawValue: -1},{name:'',symbol:'O', rawValue: 1}],
         'currentPlayer': 0,
         'startPlayer': 0,
@@ -17,9 +17,6 @@ let app = new Vue({
             // don't do anything if a cell is already occupied or game is over
             if (this.gameTable[rowindex][cellindex].value != "" || this.gameOver)
                 return;
-            // if first time here and one player is playing, second player's name is "Computer"
-            if (this.numberOfPlayers == 1 && !this.players[1].name)
-                this.players[1].name = 'Computer';
             // insert the symbol of the current playeer
             this.gameTable[rowindex].splice(cellindex,1,{value:this.players[this.currentPlayer].symbol,win:false});
             let result = this.isGameOver(this.gameTable, this.players[this.currentPlayer].symbol)
@@ -190,7 +187,7 @@ let app = new Vue({
 
         // reseting everything back to beginning of the game
         onReset: function() {
-            this.numberOfPlayers = 1;
+            this.numberOfPlayers = '';
             this.players = [{name:'', symbol:'X', rawValue: -1},{name:'',symbol:'O', rawValue: 1}],
             this.currentPlayer = 0;
             this.startPlayer = 0;
