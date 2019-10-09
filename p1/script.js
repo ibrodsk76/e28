@@ -1,18 +1,24 @@
 let app = new Vue({
     el: '#app',
     data: {
-        'numberOfPlayers': '',
-        'players': [{name:'', symbol:'X', rawValue: -1},{name:'',symbol:'O', rawValue: 1}],
-        'currentPlayer': 0,
-        'startPlayer': 0,
-        'gameOver': false,
-        'GameResults': null,
-        'gameTable': [[{value:'',win:false},{value:'',win:false},{value:'',win:false}],
+        gameMode: 'start',
+        numberOfPlayers: '',
+        players: [{name:'', symbol:'X', rawValue: -1},{name:'',symbol:'O', rawValue: 1}],
+        currentPlayer: 0,
+        startPlayer: 0,
+        gameOver: false,
+        GameResults: null,
+        gameTable: [[{value:'',win:false},{value:'',win:false},{value:'',win:false}],
                       [{value:'',win:false},{value:'',win:false},{value:'',win:false}],
                       [{value:'',win:false},{value:'',win:false},{value:'',win:false}],
                      ]
     },
     methods: {
+        startGame: function () {
+            if (this.numberOfPlayers == 1)
+                this.players[1].name = "Computer";
+            this.gameMode = 'play';
+        },
         makeMove: function(rowindex,cellindex) {
             // don't do anything if a cell is already occupied or game is over
             if (this.gameTable[rowindex][cellindex].value != "" || this.gameOver)
@@ -193,6 +199,7 @@ let app = new Vue({
             this.startPlayer = 0;
             this.gameOver = false;
             this.GameResults = null;
+            this.gameMode = 'start';
             this.gameTable = [[{value:'',win:false},{value:'',win:false},{value:'',win:false}],
             [{value:'',win:false},{value:'',win:false},{value:'',win:false}],
             [{value:'',win:false},{value:'',win:false},{value:'',win:false}],
