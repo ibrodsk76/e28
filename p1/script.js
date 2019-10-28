@@ -1,28 +1,42 @@
+Vue.component('round-detail', {
+    data: function () {
+        return {
+            deleted: false,
+        }
+    },
+    template: '#round-detail',
+    props: ['number', 'winner'],
+    methods: {
+        deleteRound: function () {
+            this.deleted = true
+        }
+    }
+});
+
 let app = new Vue({
     el: '#app',
     data: {
-        gameMode: 'start',
-        numberOfPlayers: '',
-        players: [{name:'', symbol:'X', rawValue: -1},{name:'',symbol:'O', rawValue: 1}],
-        currentPlayer: 0,
-        startPlayer: 0,
-        gameOver: false,
-        GameResults: null,
-        gameTable: [[{value:'',win:false},{value:'',win:false},{value:'',win:false}],
+        'numberOfPlayers': 1,
+        'players': [{name:'', symbol:'X', rawValue: -1},{name:'',symbol:'O', rawValue: 1}],
+        'currentPlayer': 0,
+        'startPlayer': 0,
+        'gameOver': false,
+        'GameResults': null,
+        'gameTable': [[{value:'',win:false},{value:'',win:false},{value:'',win:false}],
                       [{value:'',win:false},{value:'',win:false},{value:'',win:false}],
                       [{value:'',win:false},{value:'',win:false},{value:'',win:false}],
-                     ]
+                     ],
+        'roundNumber':1,
+        'rounds': []                
     },
     methods: {
-        startGame: function () {
-            if (this.numberOfPlayers == 1)
-                this.players[1].name = "Computer";
-            this.gameMode = 'play';
-        },
         makeMove: function(rowindex,cellindex) {
             // don't do anything if a cell is already occupied or game is over
             if (this.gameTable[rowindex][cellindex].value != "" || this.gameOver)
                 return;
+            // if first time here and one player is playing, second player's name is "Computer"
+            if (this.numberOfPlayers == 1 && !this.players[1].name)
+                this.players[1].name = 'Computer';
             // insert the symbol of the current playeer
             this.gameTable[rowindex].splice(cellindex,1,{value:this.players[this.currentPlayer].symbol,win:false});
             let result = this.isGameOver(this.gameTable, this.players[this.currentPlayer].symbol)
@@ -30,12 +44,14 @@ let app = new Vue({
             {
                 this.GameResults = this.players[this.currentPlayer].name + " won!";   
                 this.gameOver = true;
+                this.rounds.push({number:this.roundNumber++,winner:this.players[this.currentPlayer].name});
                 return;
             }
             else if (result == 1)
             {
                 this.GameResults = "It's a draw!";    
                 this.gameOver = true;
+                this.rounds.push({number:this.roundNumber++,winner:'Draw'});
                 return;
             }
 
@@ -193,17 +209,24 @@ let app = new Vue({
 
         // reseting everything back to beginning of the game
         onReset: function() {
-            this.numberOfPlayers = '';
+            this.numberOfPlayers = 1;
             this.players = [{name:'', symbol:'X', rawValue: -1},{name:'',symbol:'O', rawValue: 1}],
             this.currentPlayer = 0;
             this.startPlayer = 0;
             this.gameOver = false;
             this.GameResults = null;
-            this.gameMode = 'start';
+            this.roundNumber = 1;
+            this.rounds = [];
             this.gameTable = [[{value:'',win:false},{value:'',win:false},{value:'',win:false}],
             [{value:'',win:false},{value:'',win:false},{value:'',win:false}],
             [{value:'',win:false},{value:'',win:false},{value:'',win:false}],
            ]
+        },
+        deleteRound: function (roundNumber) {
+            function isMatchingRound(round) {
+                return round.number != this;
+            }
+            this.rounds = this.rounds.filter(isMatchingRound, roundNumber);
         }
     }
 });

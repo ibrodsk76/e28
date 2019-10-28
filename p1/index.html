@@ -7,31 +7,36 @@
         <script src='script.js' defer></script>
         <link rel="stylesheet" type="text/css" href="style.css">
 
+        <script type='text/x-template' id='round-detail'>
+            <div v-if='!deleted'>
+                <ul>
+                    <li>Round #: {{ number }}</li>
+                    <li>Winner: {{ winner }}</li>
+                </ul>
+                <button @click="$emit('delete-round', number)">Delete round</button>
+            </div>
+        </script>
     </head>
     <body>
         <h1>Tic Tac Toe</h1>
         <div id='app' v-cloak>
-            <div v-if='gameMode == "start"'>
-                <div>
-                    <input type='radio' id='onePlayer' value='1' v-model='numberOfPlayers'>
-                    <label for='onePlayer'>One Player</label>
-                    <input type='radio' id='twoPlayers' value='2' v-model='numberOfPlayers'>
-                    <label for='twoPlayers'>Two Players</label>
-                </div>
-                <div>
-                    <p v-if='numberOfPlayers == 1'>
-                        <label>What’s your name? <input type='text' v-model='players[0].name' @keyup.enter='startGame'></label>
-                    </p>
-                    <p v-if='numberOfPlayers == 2'>
-                        <label>Player 1, what’s your name? <input type='text' v-model='players[0].name' ></label>
-                        <label>Player 2, what’s your name? <input type='text' v-model='players[1].name'></label>
-                    </p>
-                    <div v-if='(numberOfPlayers==1 && players[0].name) || (numberOfPlayers == 2 && players[0].name && players[1].name)'>
-                        <button @click='startGame'>Lets play!</button>
-                    </div>    
-                </div>
-            </div>                     
-            <div v-else>
+            <div>
+                <input type='radio' id='onePlayer' value='1' v-model='numberOfPlayers'>
+                <label for='onePlayer'>One Player</label>
+                <input type='radio' id='twoPlayers' value='2' v-model='numberOfPlayers'>
+                <label for='twoPlayers'>Two Players</label>
+            </div>
+            <div>
+                <p v-if='numberOfPlayers == 1'>
+                    <label>What’s your name? <input type='text' v-model='players[0].name' ></label>
+                </p>
+                <p v-if='numberOfPlayers == 2'>
+                    <label>Player 1, what’s your name? <input type='text' v-model='players[0].name' ></label>
+                    <label>Player 2, what’s your name? <input type='text' v-model='players[1].name'></label>
+                </p>
+            </div>                 
+
+            <div v-if='(numberOfPlayers==1 && players[0].name) || (numberOfPlayers == 2 && players[0].name && players[1].name)'>
                 <p>{{ players[currentPlayer].name }}'s turn</p>
                 <table>
                     <tr v-for="(row,rowindex) in gameTable">
@@ -41,15 +46,22 @@
                         </td> 
                     </tr>
                 </table>
-
-                <div class='results'>
-                    {{GameResults}}
-                </div>
-        
-                <br/>
-                <button v-if='gameOver' v-on:click="onPlayAgain">Play Again</button>
-                <button v-on:click="onReset">Reset</button>
             </div>
+
+            <div class='results'>
+                {{GameResults}}
+            </div>
+        
+            <br/>
+            <button v-if='gameOver' v-on:click="onPlayAgain">Play Again</button>
+            <button v-on:click="onReset">Reset</button>
+            <h2 v-if='rounds.length' class='results'>Results</h2>
+            <round-detail 
+                v-for='round in rounds' 
+                v-on:delete-round='deleteRound($event)'
+                v-bind:number='round.number' 
+                v-bind:winner='round.winner'>
+            </round-detail>
         </div>
     </body>
 </html>
