@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang='en'>
+    <head>
+        <title>Project 2</title>
+        <meta charset='utf-8'>
+        <script src='js/script.js' defer></script>
+        <link rel="stylesheet" type="text/css" href="style.css">
+
+    </head>
+    <body>
+        <h1>Tic Tac Toe</h1>
+        <div id='app' v-cloak>
+            <div v-if='gameMode == "start"'>
+                <div>
+                    <input type='radio' id='onePlayer' value='1' v-model='numberOfPlayers'>
+                    <label for='onePlayer'>One Player</label>
+                    <input type='radio' id='twoPlayers' value='2' v-model='numberOfPlayers'>
+                    <label for='twoPlayers'>Two Players</label>
+                </div>
+                <div>
+                    <p v-if='numberOfPlayers == 1'>
+                        <label>What’s your name? <input type='text' v-model='players[0].name' @keyup.enter='startGame'></label>
+                    </p>
+                    <p v-if='numberOfPlayers == 2'>
+                        <label>Player 1, what’s your name? <input type='text' v-model='players[0].name' ></label>
+                        <label>Player 2, what’s your name? <input type='text' v-model='players[1].name'></label>
+                    </p>
+                    <div v-if='(numberOfPlayers==1 && players[0].name) || (numberOfPlayers == 2 && players[0].name && players[1].name)'>
+                        <button @click='startGame'>Lets play!</button>
+                    </div>    
+                </div>
+            </div>                     
+            <div v-else>
+                <p>{{ players[currentPlayer].name }}'s turn</p>
+                <table>
+                    <tr v-for="(row,rowindex) in gameTable">
+                        <td v-bind:class="{ results: gameTable[rowindex][cellindex].win }" v-for="(cell,cellindex) in row" 
+                            v-on:click='makeMove(rowindex,cellindex)'>
+                            {{cell.value}}
+                        </td> 
+                    </tr>
+                </table>
+
+                <div class='results'>
+                    {{GameResults}}
+                </div>
+        
+                <br/>
+                <button v-if='gameOver' v-on:click="onPlayAgain">Play Again</button>
+                <button v-on:click="onReset">Reset</button>
+                <h2 v-if='rounds.length>0' class='results'>Results</h2>
+                <round-detail 
+                    v-for='round in rounds' 
+                    v-on:delete-round='deleteRound($event)'
+                    v-bind:number='round.number' 
+                    v-bind:winner='round.winner'>
+                </round-detail>
+            </div>
+        </div>
+    </body>
+</html>
