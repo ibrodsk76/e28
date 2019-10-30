@@ -2,7 +2,7 @@
 
 + By: *Irene Brodskiy*
 
-+ Production URL: <http://p2.hesibrodsk.me>
++ Production URL: <http://p2-alt.hesibrodsk.me>
 
 ## Build strategy
 
