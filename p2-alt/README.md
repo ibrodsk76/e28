@@ -1,24 +1,10 @@
-# p2-alt
+## Project 2 - Alternative solution
 
-## Project setup
-```
-npm install
-```
++ By: *Irene Brodskiy*
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
++ Production URL: <http://p2.hesibrodsk.me>
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Build strategy
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [ ] Integrated
+- [x] Comprehensive

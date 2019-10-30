@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import RoundDetail from './components/RoundDetail.vue';
+import TictactoeBoard from './components/TictactoeBoard.vue';
 
 let app = new Vue({
     el: '#app',
@@ -19,7 +20,8 @@ let app = new Vue({
         rounds: []     
     },
     components: {
-        'round-detail': RoundDetail
+        RoundDetail,
+        TictactoeBoard
     },
     methods: {
         startGame: function () {

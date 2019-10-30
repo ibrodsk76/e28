@@ -31,29 +31,23 @@
                 </div>
             </div>                     
             <div v-else>
-                <p>{{ players[currentPlayer].name }}'s turn</p>
-                <table>
-                    <tr v-for="(row,rowindex) in gameTable">
-                        <td v-bind:class="{ results: gameTable[rowindex][cellindex].win }" v-for="(cell,cellindex) in row" 
-                            v-on:click='makeMove(rowindex,cellindex)'>
-                            {{cell.value}}
-                        </td> 
-                    </tr>
-                </table>
-
-                <div class='results'>
-                    {{GameResults}}
-                </div>
+                <tictactoe-board
+                    v-on:make-move='makeMove($event[0],$event[1])'
+                    :game-table='gameTable'
+                    :player-name='players[currentPlayer].name'
+                    :game-results='GameResults'>
+                </tictactoe-board>
         
                 <br/>
                 <button v-if='gameOver' v-on:click="onPlayAgain">Play Again</button>
                 <button v-on:click="onReset">Reset</button>
-                <h2 v-if='rounds.length>0' class='results'>Results</h2>
+                <h2 v-if='rounds.length>0' class='rounds'>Results</h2>
                 <round-detail 
                     v-for='round in rounds' 
                     v-on:delete-round='deleteRound($event)'
                     v-bind:number='round.number' 
-                    v-bind:winner='round.winner'>
+                    v-bind:winner='round.winner'
+                    v-bind:key='round.number'>
                 </round-detail>
             </div>
         </div>

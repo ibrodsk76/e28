@@ -21,9 +21,9 @@ table tr td:last-child
 {
     border-right: 0;
 }
-.results
+.rounds
 {
-    color: red;
+    color: rgb(187, 50, 50);
 }
 [v-cloak] {
     display: none
