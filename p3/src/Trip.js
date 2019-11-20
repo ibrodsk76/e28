@@ -53,7 +53,7 @@ export default class Trip {
 
         if (trip) {
             // If place already in the trip, do nothing
-            let place = this.getPlace(trip,placeId);
+            let place = this.getPlace(trip.id,placeId);
             if (!place)
                 trip.places.push({id: placeId}); // add a place to a trip
         } else {
@@ -76,13 +76,13 @@ export default class Trip {
         if (trip)
         {
             let tripIndex = this.trips.indexOf(trip);            
-            let place = this.getPlace(trip,placeId);
+            let place = this.getPlace(trip.id,placeId);
 
             if (place) {
                 let placeIndex = this.trips[tripIndex].places.indexOf(place);
                 this.trips[tripIndex].places.splice(placeIndex, 1);
-                if (this.trips[tripIndex].places.length == 0)
-                    this.trips.splice(tripIndex, 1);
+            if (this.trips[tripIndex].places.length == 0)
+                this.trips.splice(tripIndex, 1);
                 this.update();
             }
         }
@@ -95,7 +95,11 @@ export default class Trip {
     getTrip(destinationId) {
         return this.trips.find(({ id }) => id === destinationId) || null;
     }
-    getPlace(trip, placeId) {
-        return trip.places.find(({ id }) => id === placeId) || null;
+    getPlace(destinationId, placeId) {
+        let trip = this.getTrip(destinationId);
+        if (trip)
+            return trip.places.find(({ id }) => id === placeId) || null;
+        else
+            return null;
     }
 }

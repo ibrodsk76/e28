@@ -17,28 +17,35 @@ export default {
     data: function() {
         return {
             trip: null,
-            itinerary: null,
+            itinerary: [],
             tripplace: null
         };
     },
     methods: {
         addToItinerary: function(destinationId, placeId) {
+            this.itinerary = new Trip();
             this.itinerary.add(destinationId, placeId);
-            this.tripplace = this.itinerary.getPlace(this.trip,placeId);
+            this.trip = this.itinerary.getTrip(this.destination.id);
+            this.tripplace = this.itinerary.getPlace(this.destination.id,placeId);
             //app.store.cartCount = cart.count();
             //this.addAlert = true;
             //setTimeout(() => (this.addAlert = false), 2000);
         },
         removeFromItinerary: function(destinationId, placeId) {
+            this.itinerary = new Trip();
             this.itinerary.remove(destinationId, placeId);
-            this.tripplace = this.itinerary.getPlace(this.trip,placeId);
+            this.tripplace = this.itinerary.getPlace(this.destination.id,placeId);
             //app.store.cartCount = this.cart.count();
         }
     },
     mounted() {
         this.itinerary = new Trip();
-        this.trip = this.itinerary.getTrip(this.destination.id);
-        this.tripplace = this.itinerary.getPlace(this.trip,this.place.id);
+       // if (this.itinerary.length > 0)
+       // {
+        //    this.trip = this.itinerary.getTrip(this.destination.id);
+         //   if (this.trip)
+                this.tripplace = this.itinerary.getPlace(this.destination.id,this.place.id);
+        //}
     }
 }
 </script>
