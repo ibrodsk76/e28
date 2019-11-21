@@ -6,15 +6,16 @@
                 </router-link>
         </h2>
 
-        <div v-if='trip.places.length == 0'>No places</div>
+        <div v-if='!trip || trip.places.length == 0'>No places</div>
 
         <div v-else-if='trip.places.length > 0'>
-            <show-place
+            <show-tripplace
                 v-for='place in trip.places'
                 :key='place.id'
-                :place='getPlace(place.id)'
+                :placeId='place.id'
                 :destination='destination'
-            ></show-place>
+                v-on:remove-fromitinerary='removeFromitinerary($event[0],$event[1])'
+            ></show-tripplace>
         </div>
         <!--<ul v-else-if='trip.places.length > 0' class='cleanList'>
             <li v-for='place in trip.places' :key='place.id'>                   
@@ -27,14 +28,14 @@
     </div>
 </template>
 <script>
-import ShowPlace from './../ShowPlace.vue'
+import ShowTripplace from './../ShowTripplace.vue'
 import { default as Trip }from './../../Trip.js';
 const axios = require('axios');
 
 export default {
     name: 'TripPage',
     props: ['id'],
-    components: {ShowPlace},
+    components: {ShowTripplace},
     data: function() {
         return {
             trip: null,
@@ -42,20 +43,23 @@ export default {
         };
     },
     methods: {
-        getPlace(placeId){
-            return this.destination.places.find(({ id }) => id === placeId);
+        removeFromitinerary: function(destinationId, placeId) {
+            let itinerary = new Trip();
+            itinerary.remove(destinationId, placeId);        
+            this.trip = itinerary.getTrip(this.id);    
+            //app.store.cartCount = this.cart.count();
         }
     },
     mounted() {
         let itinerary = new Trip();
         this.trip = itinerary.getTrip(this.id);
-        this.destination = axios
-        .get(
-            'https://my-json-server.typicode.com/ibrodsk76/e28-tripplanner-api/destinations/' + this.id
-        )
-        .then(response => {
-            this.destination = response.data;
-        });
+        axios
+            .get(
+                'https://my-json-server.typicode.com/ibrodsk76/e28-tripplanner-api/destinations/' + this.id
+            )
+            .then(response => {
+                this.destination = response.data;
+            });
     }
 }
 </script>

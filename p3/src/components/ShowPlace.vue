@@ -1,5 +1,5 @@
 <template>
-        <div class='product'>
+    <div class='product'>
         <div class='product-name'>{{ place.name }}</div>
         <img class='product-thumb' :src='"./../assets/images/places/" + destination.id + "/" + place.id + ".jpg"' />
         <p class='product-description'>{{ place.description }}</p>
@@ -16,7 +16,6 @@ export default {
     props: ['destination','place'],
     data: function() {
         return {
-            trip: null,
             itinerary: [],
             tripplace: null
         };
@@ -25,7 +24,6 @@ export default {
         addToItinerary: function(destinationId, placeId) {
             this.itinerary = new Trip();
             this.itinerary.add(destinationId, placeId);
-            this.trip = this.itinerary.getTrip(this.destination.id);
             this.tripplace = this.itinerary.getPlace(this.destination.id,placeId);
             //app.store.cartCount = cart.count();
             //this.addAlert = true;
