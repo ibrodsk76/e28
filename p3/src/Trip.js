@@ -11,40 +11,30 @@ export default class Trip {
      * 
      */
     constructor() {
-        // Extract JSON cart string from local storage
+        // Extract JSON itinerary string from local storage
         let itinerary = localStorage.getItem('itinerary');
 
-        // Parse JSON cart String to `items` object
+        // Parse JSON itinerary String to `trips` object
         this.trips = (itinerary) ? JSON.parse(itinerary) : [];
     }
 
     /**
-     * Getter method for items
+     * Getter method for trips
      */
     getTrips() {
         return this.trips;
     }
 
     /**
-     * Returns how many places are in a trip
-     */
-   /* count(trip) {
-        let sum = 0;
-        for (let key of Object.keys(trip.places)) {
-            sum += this.items[key].quantity;
-        }
-        return sum;
-    } */
-
-    /**
-     * Updates cart in localstorage
+     * Updates itinerary in localstorage
      */
     update() {
         localStorage.setItem('itinerary', JSON.stringify(this.trips))
     }
 
     /**
-     * Add a new place of the given trip
+     * Add a new place to the given trip
+     * If a new destination, create a new trip
      */
     add(destinationId, placeId) {
 
@@ -57,7 +47,7 @@ export default class Trip {
             if (!place)
                 trip.places.push({id: placeId}); // add a place to a trip
         } else {
-            // destination is not in cart, add as a new trip
+            // destination is not in itinerary, add as a new trip
             this.trips.push({
                 id: destinationId,
                 places: [{id: placeId }]
@@ -68,7 +58,8 @@ export default class Trip {
     }
 
     /**
-     * Remove an item from items via productId
+     * Remove a place from a trip via placeId
+     * If no more places in a trip, remove a trip
      */
     remove(destinationId, placeId) {
         let trip = this.getTrip(destinationId);
@@ -89,12 +80,16 @@ export default class Trip {
     }
 
     /**
-     * Get an item from items via productId
-     * Returns null if product does not exist in items
+     * Get a trip from itinerary via destinationId
+     * Returns null if a trip does not exist
      */
     getTrip(destinationId) {
         return this.trips.find(({ id }) => id === destinationId) || null;
     }
+    /**
+     * Get a place from a trip via placeId
+     * Returns null if place does not exist in the trip
+     */
     getPlace(destinationId, placeId) {
         let trip = this.getTrip(destinationId);
         if (trip)

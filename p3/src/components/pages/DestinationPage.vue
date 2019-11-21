@@ -11,7 +11,7 @@
 </template>
 <script>
 import ShowPlace from './../ShowPlace.vue'
-const axios = require('axios');
+import * as app from './../../app.js';
 
 export default {
     name: 'DestinationPage',
@@ -23,10 +23,7 @@ export default {
         };
     },
     mounted() {
-        this.destination = axios
-        .get(
-            'https://my-json-server.typicode.com/ibrodsk76/e28-tripplanner-api/destinations/' + this.id
-        )
+        app.axios.get(app.config.api + 'destinations/' + this.id)
         .then(response => {
             this.destination = response.data;
         });

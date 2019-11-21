@@ -14,7 +14,7 @@
     </div>
 </template>
 <script>
-const axios = require('axios');
+import * as app from './../../app.js';
 
 export default {
     name: 'DestinationsPage',
@@ -25,10 +25,7 @@ export default {
         };
     },
     mounted() {
-        this.destinations = axios
-        .get(
-            'https://my-json-server.typicode.com/ibrodsk76/e28-tripplanner-api/destinations'
-        )
+        app.axios.get(app.config.api + 'destinations')
         .then(response => {
             this.destinations = response.data;
         });

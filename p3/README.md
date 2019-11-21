@@ -1,24 +1,18 @@
-# p3
+## Project 3
 
-## Project setup
-```
-npm install
-```
++ By: *Irene Brodskiy*
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
++ Production URL: <http://p3.hesibrodsk.me>
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Outline of features
 
-### Lints and fixes files
-```
-npm run lint
-```
+The application allows a user to prepare for an upcoming trip by browsing the destinations, 
+choosing the places and attraction the travaler wants to visit, and building the trip itinarary.
+Destinations pages - lists the available destinations.
+Destination page - lists the available attractions at the selected destination.
+Trips page - lists the user's trips.
+Trip page - lists the user's itinerary for the selected trip.
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Outside resources
+
+The information and pitcures are taken from tripadvisor.com and wikipedia

@@ -24,7 +24,7 @@
 <script>
 import ShowTripplace from './../ShowTripplace.vue'
 import { default as Trip }from './../../Trip.js';
-const axios = require('axios');
+import * as app from './../../app.js';
 
 export default {
     name: 'TripPage',
@@ -46,10 +46,7 @@ export default {
     mounted() {
         let itinerary = new Trip();
         this.trip = itinerary.getTrip(this.id);
-        axios
-            .get(
-                'https://my-json-server.typicode.com/ibrodsk76/e28-tripplanner-api/destinations/' + this.id
-            )
+        app.axios.get(app.config.api + 'destinations/' + this.id)
             .then(response => {
                 this.destination = response.data;
             });

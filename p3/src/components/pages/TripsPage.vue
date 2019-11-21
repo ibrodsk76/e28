@@ -17,7 +17,7 @@
 </template>
 <script>
 import { default as Trip }from './../../Trip.js';
-const axios = require('axios');
+import * as app from './../../app.js';
 
 export default {
     name: 'TripsPage',
@@ -36,10 +36,7 @@ export default {
     mounted() {
         this.itinerary = new Trip();
         this.trips = this.itinerary.getTrips();
-        this.destinations = axios
-        .get(
-            'https://my-json-server.typicode.com/ibrodsk76/e28-tripplanner-api/destinations'
-        )
+        app.axios.get(app.config.api + 'destinations')
         .then(response => {
             this.destinations = response.data;
         });
