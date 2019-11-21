@@ -1,5 +1,5 @@
 <template>
-    <div id='products' v-if='destination'>
+    <div id='destinations' v-if='destination'>
         <h2>Your Trip Itinerary</h2>
         <h2> <router-link exact :to='{ name: "destination", params: {"id" : destination.id } }'>
                     {{ destination.name }}
@@ -17,12 +17,6 @@
                 v-on:remove-fromitinerary='removeFromitinerary($event[0],$event[1])'
             ></show-tripplace>
         </div>
-        <!--<ul v-else-if='trip.places.length > 0' class='cleanList'>
-            <li v-for='place in trip.places' :key='place.id'>                   
-                {{ getPlace(trip.id, place.id)['name'] }}
-                <button @click='removeFromItinerary(trip.id, place.id)'>Remove</button>
-            </li>
-        </ul>-->
         
         <router-view></router-view>
     </div>
@@ -47,7 +41,6 @@ export default {
             let itinerary = new Trip();
             itinerary.remove(destinationId, placeId);        
             this.trip = itinerary.getTrip(this.id);    
-            //app.store.cartCount = this.cart.count();
         }
     },
     mounted() {

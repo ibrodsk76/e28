@@ -1,5 +1,5 @@
 <template>
-    <div id='products'>
+    <div id='destinations'>
         <h2>Choose Your Destination</h2>
         <ul class='cleanList'>
             <li v-for='destination in destinations' :key='destination.id'>
@@ -22,7 +22,6 @@ export default {
     data: function() {
         return {
             destinations: null
-           // links: ['home', 'destinations', 'trips']
         };
     },
     mounted() {

@@ -1,8 +1,8 @@
 <template>
-    <div class='product'>
-        <div class='product-name'>{{ place.name }}</div>
-        <img class='product-thumb' :src='"./../assets/images/places/" + destination.id + "/" + place.id + ".jpg"' />
-        <p class='product-description'>{{ place.description }}</p>
+    <div class='destination'>
+        <div class='destination-name'>{{ place.name }}</div>
+        <img class='destination-thumb' :src='"./../assets/images/places/" + destination.id + "/" + place.id + ".jpg"' />
+        <p class='destination-description'>{{ place.description }}</p>
 
         <button v-if='!tripplace' @click='addToItinerary(destination.id, place.id)'>Add to itinerary</button>
         <button v-if='tripplace' @click='removeFromItinerary(destination.id, place.id)'>Remove from itinerary</button>
@@ -25,25 +25,16 @@ export default {
             this.itinerary = new Trip();
             this.itinerary.add(destinationId, placeId);
             this.tripplace = this.itinerary.getPlace(this.destination.id,placeId);
-            //app.store.cartCount = cart.count();
-            //this.addAlert = true;
-            //setTimeout(() => (this.addAlert = false), 2000);
         },
         removeFromItinerary: function(destinationId, placeId) {
             this.itinerary = new Trip();
             this.itinerary.remove(destinationId, placeId);
             this.tripplace = this.itinerary.getPlace(this.destination.id,placeId);
-            //app.store.cartCount = this.cart.count();
         }
     },
     mounted() {
         this.itinerary = new Trip();
-       // if (this.itinerary.length > 0)
-       // {
-        //    this.trip = this.itinerary.getTrip(this.destination.id);
-         //   if (this.trip)
-                this.tripplace = this.itinerary.getPlace(this.destination.id,this.place.id);
-        //}
+        this.tripplace = this.itinerary.getPlace(this.destination.id,this.place.id);
     }
 }
 </script>

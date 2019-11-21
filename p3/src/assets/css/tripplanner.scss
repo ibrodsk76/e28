@@ -111,55 +111,40 @@ nav ul {
 /*----------------------------------------------------
 PAGE SPECIFIC
 -----------------------------------------------------*/
-#products {
-    .product {
+#destinations {
+    .destination {
         width: 75%;
         margin: auto;
         margin-bottom: 20px;
         border: 1px solid black;
         padding: 20px;
 
-        .product-name {
+        .destination-name {
             font-weight: bold;
             font-size: 2.0rem;
             margin: 5px 0 10px 0;
         }
 
-        .product-thumb {
+        .destination-thumb {
             width: 200px;
         }
 
-        .product-description {
+        .destination-description {
             width: 75%;
             margin: auto;
             text-align: left;
             font-style: italic;
         }
 
-        .product-price {
-            font-family: Georgia, 'Times New Roman', Times, serif;
-            font-weight: bold;
-            font-size: 2.0rem;
-        }
     }
 }
 
-#featured {
-    background-color: lighten($aqua, 10%);
-    border-radius: $radius;
-    padding: 10px;
-}
-
-#product-page {
+#destination-page {
     img {
         width: 200px;
     }
 
     .description {
-        font-size: 2rem;
-    }
-
-    .price {
         font-size: 2rem;
     }
 

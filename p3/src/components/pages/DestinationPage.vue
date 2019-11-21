@@ -1,5 +1,5 @@
 <template>
-    <div id='products' v-if='destination'>
+    <div id='destinations' v-if='destination'>
         <h2>{{ destination.name }}</h2>
         <show-place
             v-for='place in destination.places'

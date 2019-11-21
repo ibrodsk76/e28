@@ -1,8 +1,8 @@
 <template>
-    <div class='product' v-if='place'>
-        <div class='product-name'>{{ place.name }}</div>
-        <img class='product-thumb' :src='"./../assets/images/places/" + destination.id + "/" + place.id + ".jpg"' />
-        <p class='product-description'>{{ place.description }}</p>
+    <div class='destination' v-if='place'>
+        <div class='destination-name'>{{ place.name }}</div>
+        <img class='destination-thumb' :src='"./../assets/images/places/" + destination.id + "/" + place.id + ".jpg"' />
+        <p class='destination-description'>{{ place.description }}</p>
 
         <button @click="$emit('remove-fromitinerary', [destination.id, place.id])">Remove from itinerary</button>
     </div>
