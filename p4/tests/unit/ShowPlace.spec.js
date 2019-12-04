@@ -1,12 +1,11 @@
 import { expect } from 'chai'
-import { mount, RouterLinkStub } from '@vue/test-utils'
+import { shallowMount, RouterLinkStub } from '@vue/test-utils'
 import ShowPlace from '@/components/ShowPlace.vue'
 
 
 describe('ShowPlace.vue', () => {
-  it('shows a place', () => {
 
-    let destination = {
+  let destination = {
     "id": 1,
     "name": "Paris, France",
     "places": [
@@ -39,7 +38,14 @@ describe('ShowPlace.vue', () => {
       "description": "Completed in 1889, this colossal landmark, although initially hated by many Parisians, is now a famous symbol of French civic pride."
     }
 
-    const wrapper = mount(ShowPlace, {
+  it('shows a place', () => {
+
+    const wrapper = shallowMount(ShowPlace, {
+      computed: { 
+        tripplace: function() {
+          return [place]
+        }
+      },
       propsData: { destination, place },
       stubs: {
         RouterLink: RouterLinkStub
@@ -47,5 +53,7 @@ describe('ShowPlace.vue', () => {
     })
 
     expect(wrapper.text()).to.include(place.name)
+    let foundPlaceImage = wrapper.find('[data-test="place-image"]').exists();
+    expect(foundPlaceImage).to.equal(true);
   })
 })
