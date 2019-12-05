@@ -16,7 +16,7 @@ export default new Vuex.Store({
     },
     actions: {
         setDestinations(context){
-            app.axios.get(app.config.api + 'destinations').then(response => {
+            app.axios.get(app.config.api + 'destinations.json').then(response => {
                 context.commit('setDestinations',response.data);
             });
         }

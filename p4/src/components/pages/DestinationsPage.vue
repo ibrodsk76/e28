@@ -12,7 +12,6 @@
     </div>
 </template>
 <script>
-//import * as app from './../../app.js';
 
 export default {
     name: 'DestinationsPage',
