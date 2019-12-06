@@ -1,11 +1,11 @@
 <template>
     <div class='destination'>
         <div data-test='place-name' class='destination-name'>{{ place.name }}</div>
-        <img data-test='place-image' class='destination-thumb' :src='"./../assets/images/places/" + destination.id + "/" + place.id + ".jpg"' />
+        <img class='destination-thumb' :src='"./../assets/images/places/" + destination.id + "/" + place.id + ".jpg"' />
         <p class='destination-description'>{{ place.description }}</p>
 
-        <button v-if='!placeadded' @click='addToItinerary(destination.id, place.id)'>Add to itinerary</button>
-        <button v-if='placeadded' @click='removeFromItinerary(destination.id, place.id)'>Remove from itinerary</button>
+        <button :data-test='"add-to-itinerary-button-" + place.id' v-if='!placeadded' @click='addToItinerary(destination.id, place.id)'>Add to itinerary</button>
+        <button :data-test='"remove-from-itinerary-button-" + place.id' v-if='placeadded' @click='removeFromItinerary(destination.id, place.id)'>Remove from itinerary</button>
     </div>
 </template>
 <script>

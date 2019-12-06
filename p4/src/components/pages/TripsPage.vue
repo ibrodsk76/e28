@@ -7,7 +7,7 @@
 
         <ul v-else class='cleanList'>
             <li v-for='trip in trips' :key='trip.id'>
-                <router-link exact :to='{ name: "trip", params: {"id" : trip.id } }'>
+                <router-link data-test='destination-name' exact :to='{ name: "trip", params: {"id" : trip.id } }'>
                     {{ getDestination(trip.id)['name'] }}
                 </router-link>
             </li>
