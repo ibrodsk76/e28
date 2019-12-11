@@ -6,6 +6,8 @@ import DestinationsPage from './components/pages/DestinationsPage.vue';
 import DestinationPage from './components/pages/DestinationPage.vue';
 import TripsPage from './components/pages/TripsPage.vue';
 import TripPage from './components/pages/TripPage.vue';
+import ReviewsPage from './components/pages/ReviewsPage.vue';
+import AddReviewPage from './components/pages/AddReviewPage.vue';
 
 import store from './store'
 
@@ -17,7 +19,9 @@ const routes = [
   { path: '/destinations', component: DestinationsPage, name: 'destinations' },
   { path: '/destination/:id', component: DestinationPage, name: 'destination', props: true },
   { path: '/trips', component: TripsPage, name: 'trips' },
-  { path: '/trip/:id', component: TripPage, name: 'trip', props: true }
+  { path: '/trip/:id', component: TripPage, name: 'trip', props: true },
+  { path: '/reviews/:destId/:placeId', component: ReviewsPage, name: 'reviews', props: true},
+  { path: '/addreview/:destId/:placeId', component: AddReviewPage, name: 'addreview', props: true}
 ]
 
 const router = new VueRouter({

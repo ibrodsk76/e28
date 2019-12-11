@@ -22,10 +22,22 @@ export default new Vuex.Store({
         }
     },
     getters: {
+        getDestinations(state)
+        {
+            return function(){
+                return state.destinations;
+            }
+        },
         getDestinationById(state) {
             return function (id) {
                 return state.destinations.find(destination => destination.id == id);
             }
-        }
+        },
+        getPlaceById(state) {
+            return function (destinationId, placeId) {
+                let dest = state.destinations.find(destination => destination.id == destinationId);
+                return dest.places.find(place => place.id == placeId);
+            }
+        } 
     }
 })
