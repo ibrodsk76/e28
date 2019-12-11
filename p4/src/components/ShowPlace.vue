@@ -1,7 +1,7 @@
 <template>
     <div class='destination'>
         <div data-test='place-name' class='destination-name'>{{ place.name }}</div>
-        <img class='destination-thumb' :src='"./../assets/images/places/" + destination.id + "/" + place.id + ".jpg"' />
+        <img data-test="place-image" class='destination-thumb' :src='"./../assets/images/places/" + destination.id + "/" + place.id + ".jpg"' />
         <p class='destination-description'>{{ place.description }}</p>
         <p><router-link v-if='place.reviews' :to='"/reviews/" + destination.id + "/" + place.id'>Reviews ({{place.reviews.length}})</router-link></p>
         <p><router-link :to='"/addreview/" + destination.id + "/" + place.id'>Write a review...</router-link></p>
