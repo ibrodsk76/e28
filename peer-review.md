@@ -1,10 +1,8 @@
 ## P3 Peer Review
 
 + Reviewer's name: Irene Brodskiy
-+ Reviwee's name: Mamdouh Alharbi
++ Reviewee's name: Mamdouh Alharbi
 + URL to reviewee's Github repo: *https://github.com/mamdooh26/e28*
-
-*Answer the following questions in regards to the student's project you are reviewing. Include context and code examples in your answers when relevant.*
 
 
 ### Are you able to produce any errors or unexpected results?
@@ -43,4 +41,9 @@ I am not very good with CSS, but I liked how the ingridients in the recipes were
 
 ### Are there any best practices discussed in course material that you feel were not addressed in the code?
 
+Apache is not configured in production to run all traffic through the main index.html file, so you get a 404 error when refreshing the page. It wasn't a requirement in project 3, but would be a convinient feature. 
+Other than that everything seems to be addressed.
+
 ### Do you have any additional comments not covered in the above questions?
+
+Great application, simple and easy to navigate, nice looking. I wish there were more receipies to explore. Good job!
