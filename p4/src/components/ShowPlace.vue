@@ -19,19 +19,18 @@ export default {
     props: ['destination','place'],
     data: function() {
         return {
-            itinerary: [],
             placeadded: false
         };
     },
     methods: {
         addToItinerary: function(destinationId, placeId) {
-            this.itinerary = new Trip();
-            this.itinerary.add(destinationId, placeId);
+            let itinerary = new Trip();
+            itinerary.add(destinationId, placeId);
             this.placeadded = true;
         },
         removeFromItinerary: function(destinationId, placeId) {
-            this.itinerary = new Trip();
-            this.itinerary.remove(destinationId, placeId);
+            let itinerary = new Trip();
+            itinerary.remove(destinationId, placeId);
             this.placeadded = false;
         }
     },

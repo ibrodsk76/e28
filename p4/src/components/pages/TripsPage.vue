@@ -2,7 +2,12 @@
     <div id='trips-page'>
         <h2>Your Trips</h2>
 
-        <div v-if='trips.length == 0'>No trips</div>
+        <div v-if='trips.length == 0'>You don't have any trips. <br> 
+        Select a destination to start building your itinerary <br>
+        <router-link exact :to='{ name: "destinations" }'>
+            All Destinations
+        </router-link>
+        </div>
 
 
         <ul v-else class='cleanList'>

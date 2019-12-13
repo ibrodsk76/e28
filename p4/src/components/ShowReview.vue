@@ -1,7 +1,7 @@
 <template>
   <div class='review'>
         <h2 data-test='review-title' class='review-title'>{{ review.title }}</h2>
-        <p>By {{review.user}}</p>
+        <p v-if='review.user'>By {{review.user}}</p>
         <p class='place-review'>{{ review.review }}</p>
         <p>Posted on {{review.date}}</p>
   </div>

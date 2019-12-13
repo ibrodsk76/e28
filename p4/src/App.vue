@@ -23,7 +23,7 @@ export default {
   name: 'app',
   data: function() {
         return {
-            links: ['home', 'destinations', 'trips']
+            links: ['home', 'destinations', 'my trips']
         };
     },
     mounted() {

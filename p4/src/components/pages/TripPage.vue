@@ -6,7 +6,9 @@
                 </router-link>
         </h2>
 
-        <div data-test='no-places' v-if='!trip || trip.places.length == 0'>No places</div>
+        <div data-test='no-places' v-if='!trip || trip.places.length == 0'>
+            No places in your itinerary. Click the link above to start planning your trip.
+        </div>
 
         <div v-else-if='trip.places.length > 0'>
             <show-tripplace

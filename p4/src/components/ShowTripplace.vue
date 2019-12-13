@@ -8,19 +8,16 @@
     </div>
 </template>
 <script>
-import { default as Trip }from './../Trip.js';
 
 export default {
     name: 'ShowTripplace',
     props: ['destination','placeId'],
     data: function() {
         return {
-            itinerary: [],
             place: null
         };
     },
-    mounted() {
-        this.itinerary = new Trip();
+    mounted() {        
         this.place = this.destination.places.find(({ id }) => id === this.placeId)
     }
 }

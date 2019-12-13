@@ -8,17 +8,20 @@ import TripsPage from './components/pages/TripsPage.vue';
 import TripPage from './components/pages/TripPage.vue';
 import ReviewsPage from './components/pages/ReviewsPage.vue';
 import AddReviewPage from './components/pages/AddReviewPage.vue';
+import Vuelidate from 'vuelidate'
 
 import store from './store'
 
 Vue.config.productionTip = false
 Vue.use(VueRouter);
+Vue.use(Vuelidate);
+
 
 const routes = [
   { path: '/', component: HomePage, name: 'home' },
   { path: '/destinations', component: DestinationsPage, name: 'destinations' },
   { path: '/destination/:id', component: DestinationPage, name: 'destination', props: true },
-  { path: '/trips', component: TripsPage, name: 'trips' },
+  { path: '/trips', component: TripsPage, name: 'my trips' },
   { path: '/trip/:id', component: TripPage, name: 'trip', props: true },
   { path: '/reviews/:destId/:placeId', component: ReviewsPage, name: 'reviews', props: true},
   { path: '/addreview/:destId/:placeId', component: AddReviewPage, name: 'addreview', props: true}
