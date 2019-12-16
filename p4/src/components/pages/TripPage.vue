@@ -1,7 +1,7 @@
 <template>
     <div id='destinations' v-if='destination'>
         <h2>Your Trip Itinerary</h2>
-        <h2> <router-link exact :to='{ name: "destination", params: {"id" : destination.id } }'>
+        <h2> <router-link data-test='destination-name' exact :to='{ name: "destination", params: {"id" : destination.id } }'>
                     {{ destination.name }}
                 </router-link>
         </h2>

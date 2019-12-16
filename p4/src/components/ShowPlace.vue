@@ -3,11 +3,11 @@
         <div data-test='place-name' class='destination-name'>{{ place.name }}</div>
         <img data-test="place-image" class='destination-thumb' :src='"./../assets/images/places/" + destination.id + "/" + place.id + ".jpg"' />
         <p class='destination-description'>{{ place.description }}</p>
-        <p><router-link v-if='place.reviews' :to='"/reviews/" + destination.id + "/" + place.id'>Reviews ({{place.reviews.length}})</router-link></p>
-        <p><router-link :to='"/addreview/" + destination.id + "/" + place.id'>Write a review...</router-link></p>
+        <p><router-link data-test='reviews-link' v-if='place.reviews' :to='"/reviews/" + destination.id + "/" + place.id'>Reviews ({{place.reviews.length}})</router-link></p>
+        <p><router-link data-test='write-review' :to='"/addreview/" + destination.id + "/" + place.id'>Write a review...</router-link></p>
 
-        <button :data-test='"add-to-itinerary-button-" + place.id' v-if='!placeadded' @click='addToItinerary(destination.id, place.id)'>Add to itinerary</button>
-        <button :data-test='"remove-from-itinerary-button-" + place.id' v-if='placeadded' @click='removeFromItinerary(destination.id, place.id)'>Remove from itinerary</button>
+        <button data-test='add-to-itinerary-button' v-if='!placeadded' @click='addToItinerary(destination.id, place.id)'>Add to itinerary</button>
+        <button data-test='remove-from-itinerary-button' v-if='placeadded' @click='removeFromItinerary(destination.id, place.id)'>Remove from itinerary</button>
 
     </div>
 </template>
