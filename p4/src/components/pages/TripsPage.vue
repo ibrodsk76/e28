@@ -13,7 +13,7 @@
         <ul v-else class='cleanList'>
             <li v-for='trip in trips' :key='trip.id'>
                 <router-link data-test='destination-name' exact :to='{ name: "trip", params: {"id" : trip.id } }'>
-                    {{ getDestination(trip.id)['name'] }}
+                    {{ getDestinationName(trip.id) }}
                 </router-link>
             </li>
         </ul>
@@ -32,8 +32,12 @@ export default {
         };
     },
     methods: {
-        getDestination(tripId) {
-            return this.destinations.find(({ id }) => id === tripId);
+        getDestinationName(tripId) {
+            let dest = this.destinations.find(({ id }) => id === tripId);
+            if (dest)
+                return dest.name;
+            else
+                return null;
         }
     },
     mounted() {

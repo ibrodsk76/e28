@@ -134,10 +134,7 @@ export default {
                 app.axios
                     .put(app.config.api + 'destinations.json', destinations)
                     .then(response => {
-                        console.log(response);
-                        //this.$store.commit('addProduct', {
-                        //    [key]: this.product
-                        //});
+                        this.$store.commit('setDestinations',response.data);
                         this.$router.push({
                             name: 'destination',
                             params: { id: this.destId}
