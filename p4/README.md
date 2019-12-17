@@ -5,6 +5,7 @@
 + Production URL: <http://p4.hesibrodsk.me>
 
 ## Improvements based on P3 peer review feedback
++ Fixed the error in the console on the "Trips" page. The reason for the error was trying to get *destinations.length* before *destinations* has been initialized.
 + Changed the "Trips" menu item to "My Trips", it does make more sence.
 + When all places removed from the itinerary changed "No places." message to "No places in your itinerary. Click the link above to start planning your trip."
 + When no trips have been created changed "No trips" message to "You don't have any trips. Select a destination to start building your itinerary." and provided a link to all destinations.
