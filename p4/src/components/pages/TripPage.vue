@@ -9,8 +9,8 @@
         <div data-test='no-places' v-if='!trip || trip.places.length == 0'>
             No places in your itinerary. Click the link above to start planning your trip.
         </div>
-
         <div v-else-if='trip.places.length > 0'>
+            Click the link above to add more activities to your trip.
             <show-tripplace
                 v-for='place in trip.places'
                 :key='place.id'
